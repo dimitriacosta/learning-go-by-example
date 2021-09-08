@@ -39,7 +39,7 @@ var getCmd = &cobra.Command{
 
 		URL := "https://github.com/scraly/gophers/raw/main/" + gopherName + ".png"
 
-		fmt.Println("Try to get '", gopherName+"' Gopher...")
+		fmt.Printf("Try to get '%s Gopher...\n", gopherName)
 
 		// Get the data
 		response, err := http.Get(URL)
@@ -62,9 +62,9 @@ var getCmd = &cobra.Command{
 				log.Fatal(err)
 			}
 
-			fmt.Println("Perfect! Just saved in " + out.Name() + "!")
+			fmt.Println("Perfect! Just saved in", out.Name(), "!")
 		} else {
-			log.Fatal("Error: " + gopherName + " doesn't exists! :-(")
+			log.Fatalf("Error: %s doesn't exists! :-(\n", gopherName)
 		}
 	},
 }
