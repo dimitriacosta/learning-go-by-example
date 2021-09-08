@@ -18,6 +18,7 @@ package cmd
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 
@@ -43,7 +44,7 @@ var getCmd = &cobra.Command{
 		// Get the data
 		response, err := http.Get(URL)
 		if err != nil {
-			fmt.Println(err)
+			log.Fatal(err)
 		}
 		defer response.Body.Close()
 
@@ -51,19 +52,19 @@ var getCmd = &cobra.Command{
 			// Create the file
 			out, err := os.Create(gopherName + ".png")
 			if err != nil {
-				fmt.Println(err)
+				log.Fatal(err)
 			}
 			defer out.Close()
 
 			// Write the body to file
 			_, err = io.Copy(out, response.Body)
 			if err != nil {
-				fmt.Println(err)
+				log.Fatal(err)
 			}
 
 			fmt.Println("Perfect! Just saved in " + out.Name() + "!")
 		} else {
-			fmt.Println("Error: " + gopherName + " doesn't exists! :-(")
+			log.Fatal("Error: " + gopherName + " doesn't exists! :-(")
 		}
 	},
 }
