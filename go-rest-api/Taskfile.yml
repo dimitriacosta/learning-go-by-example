@@ -1,0 +1,28 @@
+version: "3"
+
+tasks:
+    build:
+        desc: Build the app
+        cmds:
+        # - GOFLAGS=-mod=mod go build -o bin/go-rest-api internal/main.go
+        - GOOS=darwin GOARCH=arm64 GOFLAGS=-mod=mod go build -o bin/go-rest-api-darwin-arm64 internal/main.go
+
+    run:
+        desc: Run the app
+        cmds:
+        - GOFLAGS=-mod=mod go run internal/main.go
+
+    swagger.gen:
+        desc: Generate code
+        cmds:
+        - GOFLAGS=-mod=mod go generate github.com/dimitriacosta/learn-go-by-example/go-rest-api/internal github.com/dimitriacosta/learning-go-by-example/go-rest-api/pkg/swagger
+
+    swagger.validate:
+        desc: Validate swagger
+        cmds:
+        - swagger validate pkg/swagger/swagger.yml
+
+    swagger.doc:
+        desc: Doc for swagger
+        cmds:
+        - docker run --rm -i yousan/swagger-yaml-to-html < pkg/swagger/swagger.yml > doc/index.html
